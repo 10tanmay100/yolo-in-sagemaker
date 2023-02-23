@@ -1,0 +1,14 @@
+# Set the name of your ECR repository
+REPO_NAME=my-ecr-repo
+
+# Build the Docker image
+docker build -t $REPO_NAME .
+
+# Log in to Amazon ECR
+aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin <your-account-id>.dkr.ecr.us-west-2.amazonaws.com
+
+# Tag the Docker image
+docker tag $REPO_NAME:latest <your-account-id>.dkr.ecr.us-west-2.amazonaws.com/$REPO_NAME:latest
+
+# Push the Docker image to ECR
+docker push <your-account-id>.dkr.ecr.us-west-2.amazonaws.com/$REPO_NAME:latest
